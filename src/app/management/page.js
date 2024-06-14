@@ -4,17 +4,30 @@ import React from 'react';
 import { useState } from 'react';
 
 export default function ManagementPage() {
-  const [count, setCount] = useState(0);
+  const [items, setItems] = useState([]);
+  const [itemTitle, setItemTitle] = useState('');
+  const [itemIngredients, setItemIngredients] = useState('');
+  const [itemAuthor, setItemAuthor] = useState('');
 
-  return (
-    <main className="min-h-screen m-0">
-      <p>Count: {count}</p>
-      <button
-        onClick={() => setCount(count + 1)}
-        className="bg-blue-200 text-slate-800 py-2 px-4"
-      >
-        Add Recipe
-      </button>
-    </main>
-  );
+  const addItem = (e) => {
+    e.preventDefault();
+
+    const newItem = {
+      id: Math.random(),
+      title: itemTitle,
+      ingredients: itemIngredients.split(','),
+      author: itemAuthor,
+    };
+
+    setItems([]);
+    setItemTitle('');
+    setItemIngredients('');
+    setItemAuthor('');
+  };
+
+  const deleteItem = (id) => {
+    setItems(items.filter((item) => item.id !== id));
+  };
+
+  return <main className="min-h-screen m-0"></main>;
 }
