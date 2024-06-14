@@ -30,19 +30,50 @@ export default function ManagementPage() {
   };
 
   return (
-  <main className="min-h-screen m-0">
-    <div className='container mx-auto px-4 py-8'>
-      <h1 className='text-3xl font-bold mb-4'>Manage Recipes</h1>
+    <main className="min-h-screen m-0">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-4">Manage Recipes</h1>
 
-      <form>
-        <h2>Add New Recipe</h2>
-        <input type='text' value={itemTitle} placeholder='Recipe Title' onChange={(e) => setItemTitle(e.target.value)}
-        />
-        <textarea value={itemIngredients} placeholder='Ingredients(...,...,..)' onChange={(e) => setItemIngredients(e.target.value)}></textarea>
-        <input type='text' value={itemAuthor} placeholder='Author' onChange={(e) => setItemAuthor(e.target.value)}
-        />
-        <button type='submit'> Add Recipe </button>
-      </form>
-    </div>
-  </main>);
+        <form>
+          <h2>Add New Recipe</h2>
+          <input
+            type="text"
+            value={itemTitle}
+            placeholder="Recipe Title"
+            onChange={(e) => setItemTitle(e.target.value)}
+          />
+          <textarea
+            value={itemIngredients}
+            placeholder="Ingredients(...,...,..)"
+            onChange={(e) => setItemIngredients(e.target.value)}
+          ></textarea>
+          <input
+            type="text"
+            value={itemAuthor}
+            placeholder="Author"
+            onChange={(e) => setItemAuthor(e.target.value)}
+          />
+          <button type="submit"> Add Recipe </button>
+        </form>
+
+        <div>
+          {items.map((item) => (
+            <div key={item.id}>
+              <h2>{item.title}</h2>
+              <p>Author: {item.author}</p>
+              <ul>
+                {' '}
+                {item.ingredients.map((ingredient) => (
+                  <li key={ingredient}>{ingredient}</li>
+                ))}
+              </ul>
+              <div>
+                <button onClick={() => deleteItem(item.id)}>Delete</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
 }
