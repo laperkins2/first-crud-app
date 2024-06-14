@@ -8,7 +8,7 @@ export default function Home() {
       <h2 className="text-2xl text-center">Simple and easy to make!</h2>
 
       <div>
-        <h2 className="my-5">Recipe Cards for Banana Nut Bread</h2>
+        <h2 className="my-5">4 Ingredient Recipes</h2>
         <RecipeCard
           cardNumber={1}
           recipeTitle={'Four Ingredient Chocolate Chip Cookies'}
