@@ -16,6 +16,7 @@ export default function RecipeCard({
       <br></br>
       Author: {author}
       <br></br>
+      {onDelete && <button onClick={onDelete}>Delete</button>}
     </div>
   );
 }

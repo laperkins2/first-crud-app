@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import RecipeCard from '../../components/RecipeCard';
 import { useState } from 'react';
 
 export default function ManagementPage() {
@@ -19,7 +20,7 @@ export default function ManagementPage() {
       author: itemAuthor,
     };
 
-    setItems([]);
+    setItems([...items, newItem]);
     setItemTitle('');
     setItemIngredients('');
     setItemAuthor('');
@@ -34,7 +35,7 @@ export default function ManagementPage() {
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-4">Manage Recipes</h1>
 
-        <form>
+        <form onSubmit={addItem}>
           <h2>Add New Recipe</h2>
           <input
             type="text"
@@ -58,19 +59,14 @@ export default function ManagementPage() {
 
         <div>
           {items.map((item) => (
-            <div key={item.id}>
-              <h2>{item.title}</h2>
-              <p>Author: {item.author}</p>
-              <ul>
-                {' '}
-                {item.ingredients.map((ingredient) => (
-                  <li key={ingredient}>{ingredient}</li>
-                ))}
-              </ul>
-              <div>
-                <button onClick={() => deleteItem(item.id)}>Delete</button>
-              </div>
-            </div>
+            <RecipeCard
+              key={item.id}
+              cardNumber={item.id}
+              recipeTitle={item.title}
+              ingredients={item.ingredients.join(', ')}
+              author={item.author}
+              onDelete={() => deleteItem(item.id)} // Pass onDelete function for delete functionality
+            />
           ))}
         </div>
       </div>
