@@ -3,7 +3,7 @@ import RecipeCard from '../components/RecipeCard';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-gray-900 text-white">
+    <main>
       <h1 className="text-5xl text-center my-1">Four Ingredient Recipes</h1>
       <h2 className="text-2xl text-center">Simple and easy to make!</h2>
 
