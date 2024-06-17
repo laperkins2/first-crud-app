@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             </Link>
           </nav>
         </header>
-        <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-gray-900 text-white"></main>
+
         {children}
         <footer className="text-center">&copy; Louis Perkins</footer>
       </body>
