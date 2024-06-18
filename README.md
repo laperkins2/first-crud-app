@@ -8,7 +8,7 @@ This is a Next.js application named Movie My First CRUD App. It includes a simpl
 
 ## How to Run
 
-1. Clone the repository: git clone [https://github.com/laperkins2/first-crud-app.git]
+1. Clone the repository: git clone [repository URL](https://github.com/laperkins2/first-crud-app.git)
 
 2. Navigate to the project directory: `cd [project-directory]`
 
@@ -16,7 +16,7 @@ This is a Next.js application named Movie My First CRUD App. It includes a simpl
 
 4. Run the development server: `npm run dev`
 
-5. Open your browser and navigate to [http://localhost:3000] to see the app in action.
+5. Open your browser and navigate to [http://localhost:3000](http://localhost:300) to see the app in action.
 
 ## Deployment
 
@@ -29,5 +29,7 @@ This application is deployed on Vercel. You can view the live site at: <https://
 - React
 
 - Tailwind CSS
+
+## Acknowledgement
 
 - Help from CodeX lecture and lab with Thomas Basham
