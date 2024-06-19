@@ -11,6 +11,7 @@ export default function ManagementPage() {
   const [itemIngredients, setItemIngredients] = useState('');
   const [itemAuthor, setItemAuthor] = useState('');
   const [idNumber, setIdNumber] = useState(4);
+  const [editItemId, setEditItemId] = useState(null);
 
   const addItem = (e) => {
     e.preventDefault();
@@ -31,6 +32,37 @@ export default function ManagementPage() {
 
   const deleteItem = (id) => {
     setItems(items.filter((item) => item.id !== id));
+  };
+
+  const editItem = (id) => {
+    let itemToEdit = items.find((item) => item.id == id);
+    if (itemToEdit) {
+      setEditItemId(id);
+      setItemTitle(itemToEdit.title);
+      setItemIngredients(itemToEdit.ingredients.join(','));
+      setItemAuthor(itemToEdit.author);
+    }
+  };
+
+  const updateItem = (e) => {
+    e.preventDefault();
+
+    let index = items.findIndex((item) => item.id === editItemId);
+    if (index !== -1) {
+      let updatedItems = [...items];
+      updatedItems[index] = {
+        id: editItemId,
+        title: itemTitle,
+        ingredients: itemIngredients.split(','),
+        author: itemAuthor,
+      };
+
+      setItems(updatedItems);
+      setEditItemId(null);
+      setItemTitle('');
+      setItemIngredients('');
+      setItemAuthor('');
+    }
   };
 
   return (
@@ -78,6 +110,7 @@ export default function ManagementPage() {
               ingredients={item.ingredients.join(', ')}
               author={item.author}
               onDelete={() => deleteItem(item.id)}
+              onEdit={() => editItem(item.id)}
             />
           ))}
         </div>
