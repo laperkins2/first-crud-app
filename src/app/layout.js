@@ -13,19 +13,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="w-100">
-          <nav className="w-100 flex justify-center ">
-            <Link className="m-1 hover:text-red-800" href="/">
-              Home
-            </Link>
-            <Link className="m-1 hover:text-red-800" href="/management">
-              Manage Recipe
-            </Link>
-          </nav>
+        <header className="bg-gray-800 text-white">
+          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+            <nav className="relative flex justify-between h-16 items-center">
+              <Link className="m-1 hover:text-red-800" href="/">
+                Home
+              </Link>
+              <Link className="m-1 hover:text-red-800" href="/management">
+                Manage Recipe
+              </Link>
+            </nav>
+          </div>
         </header>
 
         {children}
-        <footer className="text-center">&copy; Louis Perkins</footer>
+        <footer className="text-center bg-gray-800 text-white py-4">
+          &copy; Louis Perkins
+        </footer>
       </body>
     </html>
   );

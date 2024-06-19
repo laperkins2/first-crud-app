@@ -70,7 +70,10 @@ export default function ManagementPage() {
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-4">Manage Recipes</h1>
 
-        <form onSubmit={addItem} className="mb-8">
+        <form
+          onSubmit={editItemId !== null ? updateItem : addItem}
+          className="mb-8"
+        >
           <h2 className="text-xl font-semibold mb-2">Add New Recipe</h2>
           <input
             type="text"
@@ -96,8 +99,7 @@ export default function ManagementPage() {
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm"
           >
-            {' '}
-            Add Recipe{' '}
+            {editItemId !== null ? 'Update Recipe' : 'Add Recipe'}
           </button>
         </form>
 
