@@ -82,6 +82,7 @@ export default function ManagementPage() {
           <h2 className="text-xl font-semibold mb-2">Add New Recipe</h2>
           <input
             type="text"
+            required
             value={itemTitle}
             placeholder="Recipe Title"
             onChange={(e) => setItemTitle(e.target.value)}
@@ -89,12 +90,14 @@ export default function ManagementPage() {
           />
           <textarea
             value={itemIngredients}
+            required
             placeholder="Ingredients(...,...,..)"
             onChange={(e) => setItemIngredients(e.target.value)}
             className="w-full px-4 py-2 mb-4 bg-white text-black border border-gray-300 rounded-md"
           ></textarea>
           <input
             type="text"
+            required
             value={itemAuthor}
             placeholder="Author"
             onChange={(e) => setItemAuthor(e.target.value)}
