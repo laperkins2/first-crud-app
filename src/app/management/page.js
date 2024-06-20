@@ -72,7 +72,9 @@ export default function ManagementPage() {
     <main className="min-h-screen m-0 flex flex-col items-center justify-between p-24 bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-4">Manage Recipes</h1>
-
+        <h2 className="text-xl font-semibold mb-2">
+          Available Recipes: {availableRecipes}
+        </h2>
         <form
           onSubmit={editItemId !== null ? updateItem : addItem}
           className="mb-8"
