@@ -12,6 +12,7 @@ export default function ManagementPage() {
   const [itemAuthor, setItemAuthor] = useState('');
   const [idNumber, setIdNumber] = useState(4);
   const [editItemId, setEditItemId] = useState(null);
+  const [availableRecipes, setAvailableRecipes] = useState(3);
 
   const addItem = (e) => {
     e.preventDefault();
@@ -28,10 +29,12 @@ export default function ManagementPage() {
     setItemIngredients('');
     setItemAuthor('');
     setIdNumber(idNumber + 1);
+    setAvailableRecipes(availableRecipes + 1);
   };
 
   const deleteItem = (id) => {
     setItems(items.filter((item) => item.id !== id));
+    setAvailableRecipes(availableRecipes - 1);
   };
 
   const editItem = (id) => {
