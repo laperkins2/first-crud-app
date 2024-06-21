@@ -30,6 +30,8 @@ This application is deployed on Vercel. You can view the live site at: <https://
 
 - Tailwind CSS
 
+- Google Cloud Firebase
+
 ## Acknowledgement
 
 - Help from CodeX lecture and lab with Thomas Basham
