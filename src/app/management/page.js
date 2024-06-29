@@ -4,7 +4,12 @@ import React from 'react';
 import RecipeCard from '../../components/RecipeCard';
 import { useState, useEffect } from 'react';
 
-import { getAllDocuments } from '@/utils/firebaseUtils';
+import {
+  getAllDocuments,
+  addDocument,
+  updateDocument,
+  deleteDocument,
+} from '@/utils/firebaseUtils';
 import { db } from '../../../firebase.config';
 
 export default function ManagementPage() {
@@ -14,13 +19,14 @@ export default function ManagementPage() {
   const [itemAuthor, setItemAuthor] = useState('');
   const [idNumber, setIdNumber] = useState(4);
   const [editItemId, setEditItemId] = useState(null);
-  const [availableRecipes, setAvailableRecipes] = useState(3);
+  const [availableRecipes, setAvailableRecipes] = useState(0);
 
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const documents = await getAllDocuments(db, 'author');
+        const documents = await getAllDocuments('recipes');
         setItems(documents);
+        setAvailableRecipes(documents.length);
       } catch (error) {
         console.error('Not able to fetch:', error);
       }
@@ -29,27 +35,35 @@ export default function ManagementPage() {
     fetchDocuments();
   }, []);
 
-  const addItem = (e) => {
+  const addItem = async (e) => {
     e.preventDefault();
 
-    const newItem = {
-      id: Math.random(),
+    const newRecipe = {
       title: itemTitle,
-      ingredients: itemIngredients.split(','),
+      ingredients: itemIngredients.split(',').map((item) => item.trim()),
       author: itemAuthor,
     };
 
-    setItems([...items, newItem]);
-    setItemTitle('');
-    setItemIngredients('');
-    setItemAuthor('');
-    setIdNumber(idNumber + 1);
-    setAvailableRecipes(availableRecipes + 1);
+    try {
+      const docId = await addDocument('recipes', newRecipe);
+      setItems([...items, { id: docId, ...newRecipe }]);
+      setItemTitle('');
+      setItemIngredients('');
+      setItemAuthor('');
+      setAvailableRecipes(availableRecipes + 1);
+    } catch (error) {
+      console.error('Not able to add document:');
+    }
   };
 
-  const deleteItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
-    setAvailableRecipes(availableRecipes - 1);
+  const deleteItem = async (id) => {
+    try {
+      await deleteDocument('recipes', id);
+      setItems(items.filter((item) => item.id !== id));
+      setAvailableRecipes(availableRecipes - 1);
+    } catch (error) {
+      console.error('Not able to delete document:', error);
+    }
   };
 
   const editItem = (id) => {
@@ -62,24 +76,26 @@ export default function ManagementPage() {
     }
   };
 
-  const updateItem = (e) => {
+  const updateItem = async (e) => {
     e.preventDefault();
 
-    let index = items.findIndex((item) => item.id === editItemId);
-    if (index !== -1) {
-      let updatedItems = [...items];
-      updatedItems[index] = {
-        id: editItemId,
-        title: itemTitle,
-        ingredients: itemIngredients.split(','),
-        author: itemAuthor,
-      };
-
+    const updateRecipe = {
+      title: itemTitle,
+      ingredients: itemIngredients.split(',').map((item) => item.trim()),
+      author: itemAuthor,
+    };
+    try {
+      await updateDocument('recipes', editItemId, updateRecipe);
+      const updatedItems = items.map((item) =>
+        item.id === editItemId ? { id: editItemId, ...updateRecipe } : item
+      );
       setItems(updatedItems);
       setEditItemId(null);
       setItemTitle('');
       setItemIngredients('');
       setItemAuthor('');
+    } catch (error) {
+      console.error('Error updating document:', error);
     }
   };
 
@@ -130,7 +146,7 @@ export default function ManagementPage() {
           {items.map((item, index) => (
             <RecipeCard
               key={item.id}
-              cardNumber={4 + index}
+              cardNumber={index + 1}
               recipeTitle={item.title}
               ingredients={item.ingredients.join(', ')}
               author={item.author}
