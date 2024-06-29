@@ -2,8 +2,10 @@
 
 import React from 'react';
 import RecipeCard from '../../components/RecipeCard';
-import { useState } from 'react';
-import next from 'next';
+import { useState, useEffect } from 'react';
+
+import { getAllDocuments } from '@/utils/firebaseUtils';
+import { db } from '../../../firebase.config';
 
 export default function ManagementPage() {
   const [items, setItems] = useState([]);
@@ -13,6 +15,19 @@ export default function ManagementPage() {
   const [idNumber, setIdNumber] = useState(4);
   const [editItemId, setEditItemId] = useState(null);
   const [availableRecipes, setAvailableRecipes] = useState(3);
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const documents = await getAllDocuments(db, 'author');
+        setItems(documents);
+      } catch (error) {
+        console.error('Not able to fetch:', error);
+      }
+    };
+
+    fetchDocuments();
+  }, []);
 
   const addItem = (e) => {
     e.preventDefault();
