@@ -1,11 +1,12 @@
 import {
+  doc,
   collection,
   getDocs,
-  addDocs,
-  updateDocs,
-  deleteDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
-import { db } from '/firebase.config.js';
+import { db } from '/firebase.config';
 
 async function getAllDocuments(collectionName) {
   const querySnapShot = await getDocs(collection(db, collectionName));
@@ -14,24 +15,34 @@ async function getAllDocuments(collectionName) {
   querySnapShot.forEach((doc) => {
     documents.push({ id: doc.id, ...doc.data() });
   });
-  console.log(documents);
 
   return documents;
 }
 
 async function addDocument(collectionName, data) {
-  const refDocs = await addDocs(collection(db, collectionName), data);
-  return refDocs.id;
+  const docRef = await addDoc(collection(db, collectionName), data);
+  return docRef.id;
 }
 
-async function updateDocument(collectionName, docId, data) {
-  const refDocs = collection(db, collectionName).doc(docId);
-  await updateDocs(refDocs, data);
+async function updateDocument(collectionName, docId, updatedData) {
+  const docRef = doc(db, collectionName, docId);
+  try {
+    await updateDoc(docRef, updatedData);
+    console.log('update success');
+  } catch (error) {
+    console.error('error updating:', error);
+  }
 }
 
 async function deleteDocument(collectionName, docId) {
-  const refDocs = collection(db, collectionName).doc(docId);
-  await deleteDocs(refDocs);
+  const docRef = doc(db, collectionName, docId);
+
+  try {
+    await deleteDoc(docRef);
+    console.log('doc deleted successfully:', error);
+  } catch (error) {
+    console.error('error deleting:, error');
+  }
 }
 
 export { getAllDocuments, addDocument, updateDocument, deleteDocument };

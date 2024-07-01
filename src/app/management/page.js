@@ -17,7 +17,7 @@ export default function ManagementPage() {
   const [itemTitle, setItemTitle] = useState('');
   const [itemIngredients, setItemIngredients] = useState('');
   const [itemAuthor, setItemAuthor] = useState('');
-  const [idNumber, setIdNumber] = useState(4);
+  // const [idNumber, setIdNumber] = useState(4);
   const [editItemId, setEditItemId] = useState(null);
   const [availableRecipes, setAvailableRecipes] = useState(0);
 
@@ -46,28 +46,28 @@ export default function ManagementPage() {
 
     try {
       const docId = await addDocument('recipes', newRecipe);
-      setItems([...items, { id: docId, ...newRecipe }]);
+      setItems((prevItems) => [...items, { id: docId, ...newRecipe }]);
       setItemTitle('');
       setItemIngredients('');
       setItemAuthor('');
-      setAvailableRecipes(availableRecipes + 1);
+      setAvailableRecipes((prev) => prev + 1);
     } catch (error) {
-      console.error('Not able to add document:');
+      console.error('Not able to add document:', error);
     }
   };
 
   const deleteItem = async (id) => {
     try {
       await deleteDocument('recipes', id);
-      setItems(items.filter((item) => item.id !== id));
-      setAvailableRecipes(availableRecipes - 1);
+      setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      setAvailableRecipes((prev) => prev - 1);
     } catch (error) {
       console.error('Not able to delete document:', error);
     }
   };
 
   const editItem = (id) => {
-    let itemToEdit = items.find((item) => item.id == id);
+    let itemToEdit = items.find((item) => item.id === id);
     if (itemToEdit) {
       setEditItemId(id);
       setItemTitle(itemToEdit.title);
@@ -79,15 +79,15 @@ export default function ManagementPage() {
   const updateItem = async (e) => {
     e.preventDefault();
 
-    const updateRecipe = {
+    const updatedRecipe = {
       title: itemTitle,
       ingredients: itemIngredients.split(',').map((item) => item.trim()),
       author: itemAuthor,
     };
     try {
-      await updateDocument('recipes', editItemId, updateRecipe);
+      await updateDocument('recipes', editItemId, updatedRecipe);
       const updatedItems = items.map((item) =>
-        item.id === editItemId ? { id: editItemId, ...updateRecipe } : item
+        item.id === editItemId ? { id: editItemId, ...updatedRecipe } : item
       );
       setItems(updatedItems);
       setEditItemId(null);
