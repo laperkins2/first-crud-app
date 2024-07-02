@@ -10,7 +10,7 @@ import {
   updateDocument,
   deleteDocument,
 } from '@/utils/firebaseUtils';
-import { db } from '../../../firebase.config';
+// import { db } from '../../../firebase.config';
 
 export default function ManagementPage() {
   const [items, setItems] = useState([]);
