@@ -3,14 +3,13 @@
 import React from 'react';
 import RecipeCard from '../../components/RecipeCard';
 import { useState, useEffect } from 'react';
-
+import RegistrationForm from '@/components/RegisterForm';
 import {
   getAllDocuments,
   addDocument,
   updateDocument,
   deleteDocument,
 } from '@/utils/firebaseUtils';
-// import { db } from '../../../firebase.config';
 
 export default function ManagementPage() {
   const [items, setItems] = useState([]);
@@ -106,6 +105,8 @@ export default function ManagementPage() {
         <h2 className="text-xl font-semibold mb-2">
           Available Recipes: {availableRecipes}
         </h2>
+        <RegistrationForm />
+
         <form
           onSubmit={editItemId !== null ? updateItem : addItem}
           className="mb-8"
