@@ -41,7 +41,7 @@ async function deleteDocument(collectionName, docId) {
     await deleteDoc(docRef);
     console.log('doc deleted successfully:', error);
   } catch (error) {
-    console.error('error deleting:, error');
+    console.error('error deleting: ', error);
   }
 }
 

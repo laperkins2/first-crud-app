@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { auth } from '/firebase.config';
+import { auth } from 'firebase.config';
+import { registerUser, login } from '@/utils/authUtils';
 
 const RegistrationForm = () => {
   const [email, setEmail] = useState('');
@@ -11,12 +12,7 @@ const RegistrationForm = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      console.log('User created:', userCredential.user);
+      await registerUser(email, password);
       setShowLoginForm(true);
       setShowRegistrationForm(false);
     } catch (error) {
@@ -32,6 +28,9 @@ const RegistrationForm = () => {
         password
       );
       console.log('User logged in:', userCredential.user);
+      await login(email, password);
+      setShowLoginForm(true);
+      setShowRegistrationForm(false);
     } catch (error) {
       setError(error.message);
     }

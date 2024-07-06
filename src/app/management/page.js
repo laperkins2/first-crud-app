@@ -4,19 +4,20 @@ import React from 'react';
 import RecipeCard from '../../components/RecipeCard';
 import { useState, useEffect } from 'react';
 import RegistrationForm from '@/components/RegisterForm';
+import { login, logout } from '@/utils/authUtils';
 import {
   getAllDocuments,
   addDocument,
   updateDocument,
   deleteDocument,
 } from '@/utils/firebaseUtils';
+import { auth } from '/firebase.config';
 
 export default function ManagementPage() {
   const [items, setItems] = useState([]);
   const [itemTitle, setItemTitle] = useState('');
   const [itemIngredients, setItemIngredients] = useState('');
   const [itemAuthor, setItemAuthor] = useState('');
-  // const [idNumber, setIdNumber] = useState(4);
   const [editItemId, setEditItemId] = useState(null);
   const [availableRecipes, setAvailableRecipes] = useState(0);
 
@@ -45,7 +46,7 @@ export default function ManagementPage() {
 
     try {
       const docId = await addDocument('recipes', newRecipe);
-      setItems((prevItems) => [...items, { id: docId, ...newRecipe }]);
+      setItems((prevItems) => [...prevItems, { id: docId, ...newRecipe }]);
       setItemTitle('');
       setItemIngredients('');
       setItemAuthor('');
@@ -105,44 +106,55 @@ export default function ManagementPage() {
         <h2 className="text-xl font-semibold mb-2">
           Available Recipes: {availableRecipes}
         </h2>
-        <RegistrationForm />
+        <h3 className="text-2xl font-extrabold mb-2 text-center">
+          Please Register or Login to manage the recipes
+        </h3>
 
-        <form
-          onSubmit={editItemId !== null ? updateItem : addItem}
-          className="mb-8"
-        >
-          <h2 className="text-xl font-semibold mb-2">Add New Recipe</h2>
-          <input
-            type="text"
-            required
-            value={itemTitle}
-            placeholder="Recipe Title"
-            onChange={(e) => setItemTitle(e.target.value)}
-            className="w-full px-4 py-2 mb-4 bg-white text-black border border-gray-300 rounded-md"
-          />
-          <textarea
-            value={itemIngredients}
-            required
-            placeholder="Ingredients(...,...,..)"
-            onChange={(e) => setItemIngredients(e.target.value)}
-            className="w-full px-4 py-2 mb-4 bg-white text-black border border-gray-300 rounded-md"
-          ></textarea>
-          <input
-            type="text"
-            required
-            value={itemAuthor}
-            placeholder="Author"
-            onChange={(e) => setItemAuthor(e.target.value)}
-            className="w-full px-4 py-2 mb-4 bg-white text-black border border-gray-300 rounded-md"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm"
+        {!auth.currentUser && <RegistrationForm />}
+
+        {auth.currentUser && (
+          <div>
+            <button onClick={() => logout()}>Sign Out</button>
+          </div>
+        )}
+
+        {auth.currentUser && (
+          <form
+            onSubmit={editItemId !== null ? updateItem : addItem}
+            className="mb-8"
           >
-            {editItemId !== null ? 'Update Recipe' : 'Add Recipe'}
-          </button>
-        </form>
-
+            <h2 className="text-xl font-semibold mb-2">Add New Recipe</h2>
+            <input
+              type="text"
+              required
+              value={itemTitle}
+              placeholder="Recipe Title"
+              onChange={(e) => setItemTitle(e.target.value)}
+              className="w-full px-4 py-2 mb-4 bg-white text-black border border-gray-300 rounded-md"
+            />
+            <textarea
+              value={itemIngredients}
+              required
+              placeholder="Ingredients(...,...,..)"
+              onChange={(e) => setItemIngredients(e.target.value)}
+              className="w-full px-4 py-2 mb-4 bg-white text-black border border-gray-300 rounded-md"
+            ></textarea>
+            <input
+              type="text"
+              required
+              value={itemAuthor}
+              placeholder="Author"
+              onChange={(e) => setItemAuthor(e.target.value)}
+              className="w-full px-4 py-2 mb-4 bg-white text-black border border-gray-300 rounded-md"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm"
+            >
+              {editItemId !== null ? 'Update Recipe' : 'Add Recipe'}
+            </button>
+          </form>
+        )}
         <div>
           {items.map((item, index) => (
             <RecipeCard
