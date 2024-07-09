@@ -4,14 +4,14 @@ import React from 'react';
 import RecipeCard from '../../components/RecipeCard';
 import { useState, useEffect } from 'react';
 import RegistrationForm from '@/components/RegisterForm';
-import { login, logout } from '@/utils/authUtils';
+import { logout } from '@/utils/authUtils';
 import {
   getAllDocuments,
   addDocument,
   updateDocument,
   deleteDocument,
 } from '@/utils/firebaseUtils';
-import { auth } from 'firebase.config';
+import { auth } from '/firebase.config';
 
 export default function ManagementPage() {
   const [items, setItems] = useState([]);
