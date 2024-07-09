@@ -23,11 +23,11 @@ const RegistrationForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await auth.signInWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log('User logged in:', userCredential.user);
+      // const userCredential = await auth.signInWithEmailAndPassword(
+      //   email,
+      //   password
+      // );
+      // console.log('User logged in:', userCredential.user);
       await login(email, password);
       setShowLoginForm(true);
       setShowRegistrationForm(false);

@@ -11,7 +11,7 @@ import {
   updateDocument,
   deleteDocument,
 } from '@/utils/firebaseUtils';
-import { auth } from '/firebase.config';
+import { auth } from 'firebase.config';
 
 export default function ManagementPage() {
   const [items, setItems] = useState([]);
@@ -20,6 +20,7 @@ export default function ManagementPage() {
   const [itemAuthor, setItemAuthor] = useState('');
   const [editItemId, setEditItemId] = useState(null);
   const [availableRecipes, setAvailableRecipes] = useState(0);
+  const [showRegistration, setShowRegistration] = useState(true);
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -99,6 +100,17 @@ export default function ManagementPage() {
     }
   };
 
+  const handleLogOut = () => {
+    logout();
+    setItems([]);
+    setItemTitle('');
+    setItemIngredients('');
+    setItemAuthor('');
+    setEditItemId(null);
+    setAvailableRecipes(0);
+    setShowRegistration(true);
+  };
+
   return (
     <main className="min-h-screen m-0 flex flex-col items-center justify-between p-24 bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-8">
@@ -107,14 +119,21 @@ export default function ManagementPage() {
           Available Recipes: {availableRecipes}
         </h2>
         <h3 className="text-2xl font-extrabold mb-2 text-center">
-          Please Register or Login to manage the recipes
+          {auth.currentUser
+            ? 'Welcome back!'
+            : 'Please Register or Login to manage the recipes'}
         </h3>
 
-        {!auth.currentUser && <RegistrationForm />}
+        {!auth.currentUser && showRegistration && <RegistrationForm />}
 
         {auth.currentUser && (
           <div>
-            <button onClick={() => logout()}>Sign Out</button>
+            <button
+              onClick={handleLogOut}
+              className="px-4 py-2 bg-red-500 text-white rounded-md shadow-sm"
+            >
+              Sign Out
+            </button>
           </div>
         )}
 

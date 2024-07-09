@@ -6,7 +6,7 @@ import {
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore';
-import { db } from '/firebase.config';
+import { db } from 'firebase.config';
 
 async function getAllDocuments(collectionName) {
   const querySnapShot = await getDocs(collection(db, collectionName));
