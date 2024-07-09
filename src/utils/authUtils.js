@@ -2,7 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-} from '/firebase/auth';
+} from 'firebase/auth';
 import { auth } from 'firebase.config';
 
 async function registerUser(email, password) {
