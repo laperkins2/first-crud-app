@@ -36,5 +36,3 @@ This application is deployed on Vercel. You can view the live site at: <https://
 
 - Help from CodeX lecture and lab with Thomas Basham
 - Chatgpt with help adding my edit button
-- help
-- help
