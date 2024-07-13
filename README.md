@@ -18,6 +18,16 @@ This is a Next.js application named Movie My First CRUD App. It includes a simpl
 
 5. Open your browser and navigate to [http://localhost:3000](http://localhost:300) to see the app in action.
 
+## Running Tests
+
+1. To run the unit tests, use the following command:
+
+2. ```bash
+
+   ```
+
+3. npm run test
+
 ## Deployment
 
 This application is deployed on Vercel. You can view the live site at: <https://first-crud-app-nine.vercel.app/>
@@ -36,3 +46,5 @@ This application is deployed on Vercel. You can view the live site at: <https://
 
 - Help from CodeX lecture and lab with Thomas Basham
 - Chatgpt with help adding my edit button
+- <https://jestjs.io/docs/expect>
+- <https://jestjs.io/docs/mock-function-api>
