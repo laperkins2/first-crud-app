@@ -22,9 +22,7 @@ This is a Next.js application named Movie My First CRUD App. It includes a simpl
 
 1. To run the unit tests, use the following command:
 
-2. ```bash
-
-   ```
+2. Run in bash
 
 3. npm run test
 
